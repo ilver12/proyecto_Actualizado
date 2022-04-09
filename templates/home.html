@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  inicio
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-success p-2  bg-opacity-60">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link" href="/login">Iniciar Sesion</a>
+          <a class="nav-link" href="/registro">Registrarse</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
