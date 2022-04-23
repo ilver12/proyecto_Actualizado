@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Recuperar
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/img/css/recuperar.css">
+<link rel="stylesheet" href="/static/img/css/normalize.css">
+{% endblock %}
+
+{% block body %}
+
+<section id="form-width">
+    <form action="{{url_for('recuPass')}}" method="POST" id="form-container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="logotipe d-flex justify-content-center">
+                    <a href="" class="d-flex align-items-center">
+                        <img src="/static/img/user.jpg" class="img-fluid" id="logo">
+                        <h3 class="ubuntu">RECUPERAR</h3>
+                    </a>
+                </div>
+                <h4 class="text-center text-uppercase fw-bold">RECUPERACION</h4>
+
+                <hr>
+
+                <div class="inputs-form form-group">
+                    <label for="email_form" class="ubuntu mb-1">Correo electrónico</label>
+                    <input type="email" name="email_form" class="form-control mb-4" id="email_form" required>
+
+                    <button type="submit" class="btn mt-1" id="send_form"> Enviar</button>
+                    <div class=" mt-4 mb-4  bg-warning p-2 text-danger bg-opacity-50">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <ul>
+                            {% for messages in messages %}
+                                <li>{{messages}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}
+                      </div>
+
+                </div>
+                
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <figure class=" img-form">
+                    <img src="/static/img/recuperar.jpg" alt="" >
+                </figure>
+            </div>
+
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}

@@ -23,7 +23,7 @@ def registrarse():
     else:
         nombre = request.form.get('nombre')
         descripcion = request.form.get('descripcion')
-        imagen = request.form.get('imagen')
+        imagen = request.files['imagen']
         celular = request.form.get('celular')
         direccion = request.form.get('direccion')
         correo = request.form.get('correo')
@@ -77,11 +77,13 @@ def registrarse():
 
         #encriptar contraseña
         #encriptarPassword.encriptar(contraseña=contraseña)
-        #print(contraseña)
+        #print(contraseña)s
         contraseña = hashlib.sha1(contraseña.encode()).hexdigest()
         #insertar datos en la bd
+        nombre_imagen= imagen.filename
         
-        registroModels.insertarRegistro(nombre=nombre,descripcion=descripcion,imagen=imagen,celular=celular,direccion=direccion,correo=correo,contraseña=contraseña)
+        imagen.save('./stati/img/' + nombre_imagen)
+        registroModels.insertarRegistro(nombre=nombre,descripcion=descripcion,imagen='/stati/img/' + nombre_imagen,celular=celular,direccion=direccion,correo=correo,contraseña=contraseña)
         
         token=s.dumps(correo, salt='email-confirm')
         link= url_for('confirmarEmail', token=token, _external=True)
@@ -158,5 +160,132 @@ def iniciarLogin():
             return render_template('login.html')
         '''
 
+@app.route('/login/recuperarPass/<token>')
+def restablecer(token):
+    try:
+        correo=s.loads(token, salt='nuevaPass', max_age=60)
+    except SignatureExpired:
+        return render_template('recuperar_Pass.html')
+    return redirect(url_for('PassNew', correo=correo, _external=True))
+
+
+@app.route('/login/recuperarPass', methods=['GET','POST'])
+def recuPass():
+    if request.method =='GET':
+        return render_template('recuperar_Pass.html')
+    else:
+        correo = request.form.get('email_form')
+
+        cursor =db.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM usuarios WHERE correo = %s and estado='1'", (
+            correo,
+            ))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if not(user):
+            flash('Correo no existe')
+            return render_template('recuperar_Pass.html')
+
+        is_valid = True
+
+        if correo =='':
+            flash('Debe ingresar un email')
+            is_valid = False
+
+        if is_valid == False:
+            return render_template('recuperar_Pass.html', correo = correo)
+
+        token=s.dumps(correo, salt='nuevaPass')
+        link=url_for('restablecer', token=token, _external=True)
+
+        
+
+        msg = EmailMessage()
+        msg.set_content("Click en el enlace para restablecer contraseña: {} ".format(link))
+        msg["Subject"] = "Recuperacion Password"
+        msg["From"] = settings.SMTP_EMAIL
+        msg["To"] = correo
+        username = settings.SMTP_EMAIL
+        password = settings.SMTP_PASSWORD 
+        server = SMTP("smtp.gmail.com:587")
+        server.starttls()
+        server.login(username, password)
+        server.send_message(msg)
+        server.quit()
+        flash("REVISA TU CORREO")
+        
+        return render_template('recuperar_Pass.html')
+    '''if request.method =='GET':
+        return render_template('registro.html')
+    else:
+        correo = request.form.get('email_form')
+
+        is_valid = True
+
+        if correo =='':
+            flash('Debe ingresar un email')
+            is_valid = False
+
+        if is_valid == False:
+            return render_template('recuperar_Pass.html', correo = correo)
+        
+
+        msg = EmailMessage()
+        msg.set_content("Confirmar tu correo aqui: {} ".format())
+        msg["Subject"] = "Registro de confirmacion"
+        msg["From"] = settings.SMTP_EMAIL
+        msg["To"] = correo
+        username = settings.SMTP_EMAIL
+        password = settings.SMTP_PASSWORD 
+        server = SMTP("smtp.gmail.com:587")
+        server.starttls()
+        server.login(username, password)
+        server.send_message(msg)
+        server.quit()
+        flash("¡Te has registrado con éxito! REVISA TU CORREO")
+        
+        return render_template('recuperar_Pass.html')
+        '''
+
+@app.route('/login/recuperarPass/nueva/<correo>', methods=['GET','POST'])
+def PassNew(correo):
+    if request.method =='GET':
+        return render_template('formularioRecu.html')
+    else:
+        contraseña = request.form.get('contraseña')
+        contraseñaR = request.form.get('contraseñaR')
+
+        is_valid = True
+
+        if contraseña =='':
+            flash('Debe ingresar una contraseña')
+            is_valid = False
+
+        if contraseñaR =='':
+            flash('Debe ingresar una contraseña')
+            is_valid = False
+        
+        elif validarPassword.validarContraseña(contraseña) == False:
+            flash('Contraseña no cumple con los parametros letra Mayuscula, caracter especial *@, un numero')
+            is_valid= False
+        
+        elif validarPassword.validarContraseña(contraseñaR) == False:
+            flash('Contraseña no cumple con los parametros letra Mayuscula, caracter especial *@, un numero')
+            is_valid= False
+
+        if is_valid == False:
+            return render_template('formularioRecu.html', contraseña=contraseña, contraseñaR=contraseñaR)
+         
+        if contraseña==contraseñaR:
+
+            contraseñaN=hashlib.sha1(contraseñaR.encode()).hexdigest()
+            registroModels.actualizarPass(correo=correo,contraseñaN=contraseñaN)
+            flash('Contraseña Actualizada')
+            return render_template('login.html')
+        else:
+            flash('Constraseñas incorrectas')
+            return render_template('formularioRecu.html')
+        
 
 app.run(debug=True)

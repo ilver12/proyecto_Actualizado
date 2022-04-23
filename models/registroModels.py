@@ -1,6 +1,6 @@
 from config.database import db
 
-def iansertrRegistro(nombre,descripcion,imagen,celular,direccion,correo,contraseña):
+def insertarRegistro(nombre,descripcion,imagen,celular,direccion,correo,contraseña):
     cursor = db.cursor()
     cursor.execute("insert into usuarios(nombre,descripcion,imagen,celular,direccion,correo,contraseña) values(%s,%s,%s,%s,%s,%s,%s)",(
         nombre,
@@ -13,3 +13,7 @@ def iansertrRegistro(nombre,descripcion,imagen,celular,direccion,correo,contrase
     ))
     cursor.close()
 
+def actualizarPass(correo,contraseñaN):
+    cursor = db.cursor()
+    cursor.execute("UPDATE usuarios SET contraseña='"+contraseñaN+"' where correo='"+correo+"'")
+    cursor.close()
