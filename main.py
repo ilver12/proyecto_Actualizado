@@ -16,6 +16,49 @@ s=URLSafeTimedSerializer('Thisisasecret')
 def home():
     return render_template('home.html')
 
+@app.get('/crearProducto')
+def crear():
+    return render_template('crearProducto.html')
+
+@app.post('/crearProducto')
+def crearProducto():
+    imagen = request.files['imagen']
+    nombre = request.form.get('nombre')
+    descripcion = request.form.get('descripcion')
+    precio = request.form.get('precio')
+    estado = request.form.get('estado')
+    
+
+    is_valid = True
+
+    if nombre=='':
+        flash('Dede ingresar un nombre producto')
+        is_valid = False
+
+    if descripcion =='':
+        flash('Ingrese una descripcion del producto')
+        is_valid = False
+    
+    if precio =='':
+        flash('Precio requerido')
+        is_valid = False
+    
+    if estado =='':
+        flash('Estado del producto requerido')
+        is_valid = False
+
+    if imagen =='':
+        flash('imagen requerida')
+        is_valid = False
+
+    if is_valid == False:
+        return render_template('crearProducto.html', nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen=imagen)
+
+    nombre_img = imagen.filename
+    imagen.save('./stati/img/' + nombre_img)
+    registroModels.crearProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/stati/img/' + nombre_img)
+    return redirect(url_for('bienvenido'))
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registrarse():
     if request.method =='GET':
@@ -139,7 +182,7 @@ def iniciarLogin():
             if contraseña == user["contraseña"]:
                 session['correo'] = user['correo']
                 session['contraseña'] = user['contraseña']
-                return render_template('login_home.html')
+                return redirect(url_for('bienvenido'))
             else:
                 flash('contraseña/Correo incorrecta')
                 return render_template("login.html")
@@ -159,6 +202,13 @@ def iniciarLogin():
             flash("¡Nombre de usuario/contraseña incorrectos!")
             return render_template('login.html')
         '''
+  
+@app.route('/login/bienvenido', methods=['GET','POST'])
+def bienvenido():
+
+        productos = registroModels.obtenerProductos()
+        return render_template('login_home.html', productos=productos)
+
 
 @app.route('/login/recuperarPass/<token>')
 def restablecer(token):

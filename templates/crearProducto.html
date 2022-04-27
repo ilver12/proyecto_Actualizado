@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+   Crear Producto
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/img/css/recuperar.css">
+<link rel="stylesheet" href="/static/img/css/normalize.css">
+{% endblock %}
+
+{% block body %}
+
+  
+<section id="form-width">
+    <form action="{{url_for('crearProducto')}}" method="POST" id="form-container" enctype="multipart/form-data">        
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <figure class=" img-form">
+                    <img src="/static/img/crear.jpg" alt="" >
+                </figure>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="logotipe d-flex justify-content-center">
+                    <a href="" class="d-flex align-items-center">
+                        <img src="/static/img/lo.png" class="img-fluid" id="logo">
+                        <h3 class="ubuntu">Crear Producto</h3>
+                    </a>
+                </div>
+                <h4 class="text-center text-uppercase fw-bold">PRODUCTO</h4>
+
+                <hr>
+
+                <div class="inputs-form form-group">
+                    <label for="" class="ubuntu mb-1">Nombre</label>
+                    <input type="text" name="nombre" class="form-control mb-4" id="nombre" value="{{nombre}}">
+
+                    <label for="" class="ubuntu mb-1">Descripcion</label>
+                    <input type="text" name="descripcion" class="form-control mb-4" id="descripcion" value="{{descripcion}}">
+                    
+                    <label for="" class="ubuntu mb-1">Precio</label>
+                    <input type="number" name="precio" class="form-control mb-4" id="precio" value="{{precio}}">
+
+                    <label for="" class="ubuntu mb-1">Estado</label>
+                    <input type="text" name="estado" class="form-control mb-4" id="estado" value="{{estado}}">
+
+                    <label for="" class="ubuntu mb-1">Imagen</label>
+                    <input  type="file" name="imagen" class="form-control mb-4" id="" value="">
+
+                    <button type="submit" class="btn mt-1" id="send_form">CREAR</button>
+
+                    <div class=" mt-4 mb-4  bg-warning p-2 text-danger bg-opacity-50">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <ul>
+                            {% for messages in messages %}
+                                <li>{{messages}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}
+                      </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </form>
+
+</section>
+{% endblock %}

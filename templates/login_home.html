@@ -1,13 +1,95 @@
-{% extends 'navbar.html' %}
+{% extends 'base.html' %}
 
 {% block titulo %}
   login iniciado
 {% endblock %}
 
 {% block css %}
+
 {% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-success p-2  bg-opacity-60">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"></a>
+    <img src="/static/img/lo.png" width="50" height="54" class="d-inline-block align-text-top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/login">Iniciar Sesion</a>
+        <a class="nav-link" href="/registro">Registrarse</a>
+        <a class="nav-link fw-bold" href="/crearProducto">Crear Producto</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <table class="table">
+    <thead>
+      <tr class="table-warning text-center">
+        <th scope="col">ID</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">DESCRIPCION</th>
+        <th scope="col">PRECIO</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">IMAGEN</th>
+        <th scope="col">OPCION</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr class="table-info text-center">
+        <td>{{producto['id']}}</td>
+        <td>{{producto['nombre']}}</td>
+        <td>{{producto['descripcion']}}</td>
+        <td>{{producto['precio']}}</td>
+        <td>{{producto['estado']}}</td>
+        <td>
+          <img src="{{ producto['imagen'] }}" style="width: 100px; height:100px;">
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary">Editar</button>
+          <button type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
 
 
+
+<!--
+  <table border="2">
+  <tr>
+      <td>ID</td>
+      <td>NOMBRE</td>
+      <td>DESCRIPCION</td>
+      <td>PRECIO</td>
+      <td>ESTADO</td>
+      <td>IMAGEN</td>
+      <td>OPCION</td>
+  </tr>
+
+  {% for producto in productos %}
+  <tr>
+      <td>{{producto['id']}}</td>
+      <td>{{producto['nombre']}}</td>
+      <td>{{producto['descripcion']}}</td>
+      <td>{{producto['precio']}}</td>
+      <td>{{producto['estado']}}</td>
+      <td>{{producto['imagen']}}</td>
+      <td><a href="">EDITAR</a></td>
+      <td><a href="/">ELIMINAR</a></td>
+      
+  </tr>
+  {% endfor %}
+
+</table>
+-->
 {% endblock %}

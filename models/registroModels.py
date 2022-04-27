@@ -13,6 +13,27 @@ def insertarRegistro(nombre,descripcion,imagen,celular,direccion,correo,contrase
     ))
     cursor.close()
 
+def crearProducto(nombre,descripcion,precio,estado,imagen):
+    cursor = db.cursor()
+    cursor.execute("insert into productos(Nombre,Descripcion,Precio,Estado,Imagen) values(%s,%s,%s,%s,%s)",(
+        nombre,
+        descripcion,
+        precio,
+        estado,
+        imagen,
+
+    ))
+    cursor.close()
+
+def obtenerProductos():
+    cursor = db.cursor(dictionary = True)
+    cursor.execute("select * from productos")
+    productos = cursor.fetchall() #obtener todo
+    #producto = cursor.fetchone()
+    print(productos)
+    cursor.close()
+    return productos
+
 def actualizarPass(correo,contraseñaN):
     cursor = db.cursor()
     cursor.execute("UPDATE usuarios SET contraseña='"+contraseñaN+"' where correo='"+correo+"'")
