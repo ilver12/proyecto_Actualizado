@@ -52,8 +52,8 @@
           <img src="{{ producto['imagen'] }}" style="width: 100px; height:100px;">
         </td>
         <td>
-          <button type="button" class="btn btn-primary">Editar</button>
-          <button type="button" class="btn btn-danger">Eliminar</button>
+          <a href="/editarProducto/{{producto['id']}}"><button type="button" class="btn btn-primary">Editar</button></a>
+          <a href="/eliminar/{{producto['id']}}"><button type="submit" class="btn btn-danger">Eliminar</button></a>
         </td>
       </tr>
       {% endfor %}

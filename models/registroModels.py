@@ -25,6 +25,18 @@ def crearProducto(nombre,descripcion,precio,estado,imagen):
     ))
     cursor.close()
 
+def actualizarProducto(nombre,descripcion,precio,estado,imagen,id):
+    cursor = db.cursor()
+    cursor.execute("UPDATE productos SET  nombre = %s, descripcion = %s, precio = %s, estado = %s, imagen =%s  WHERE id = %s", 
+        (nombre, 
+        descripcion,
+        precio,
+        estado,
+        imagen,
+        id,
+        )) 
+    cursor.close()
+
 def obtenerProductos():
     cursor = db.cursor(dictionary = True)
     cursor.execute("select * from productos")

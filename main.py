@@ -16,9 +16,44 @@ s=URLSafeTimedSerializer('Thisisasecret')
 def home():
     return render_template('home.html')
 
+@app.route("/eliminar/<int:id>")
+def eliminarProducto(id):
+    cursor = db.cursor()
+    cursor.execute("delete from productos where id={0}".format(id))
+    cursor.close()
+    return redirect(url_for('bienvenido'))
+
+@app.get('/editar')
+def editar():
+    return render_template('editarProducto.html')
+
+@app.route('/editarProducto/<int:id>')
+def editarProducto(id):
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM productos WHERE id = {0}".format(id))
+    item = cursor.fetchall()
+    cursor.close()
+    return render_template('editarProducto.html', producto = item[0])
+
+@app.route('/editarProducto/<int:id>', methods=['POST'])
+def actualizarProducto(id):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        precio = request.form['precio']
+        estado = request.form['estado']
+        imagen = request.files['imagen']
+
+        nombre_img = imagen.filename
+        imagen.save('./static/img/' + nombre_img)
+        registroModels.actualizarProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/static/img/' + nombre_img, id=id)
+        return redirect(url_for('bienvenido'))
+
+
 @app.get('/crearProducto')
 def crear():
     return render_template('crearProducto.html')
+
 
 @app.post('/crearProducto')
 def crearProducto():
@@ -55,8 +90,8 @@ def crearProducto():
         return render_template('crearProducto.html', nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen=imagen)
 
     nombre_img = imagen.filename
-    imagen.save('./stati/img/' + nombre_img)
-    registroModels.crearProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/stati/img/' + nombre_img)
+    imagen.save('./static/img/' + nombre_img)
+    registroModels.crearProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/static/img/' + nombre_img)
     return redirect(url_for('bienvenido'))
 
 @app.route('/registro', methods=['GET', 'POST'])
@@ -125,8 +160,8 @@ def registrarse():
         #insertar datos en la bd
         nombre_imagen= imagen.filename
         
-        imagen.save('./stati/img/' + nombre_imagen)
-        registroModels.insertarRegistro(nombre=nombre,descripcion=descripcion,imagen='/stati/img/' + nombre_imagen,celular=celular,direccion=direccion,correo=correo,contraseña=contraseña)
+        imagen.save('./static/img/' + nombre_imagen)
+        registroModels.insertarRegistro(nombre=nombre,descripcion=descripcion,imagen='/static/img/' + nombre_imagen,celular=celular,direccion=direccion,correo=correo,contraseña=contraseña)
         
         token=s.dumps(correo, salt='email-confirm')
         link= url_for('confirmarEmail', token=token, _external=True)
