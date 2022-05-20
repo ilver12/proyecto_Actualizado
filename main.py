@@ -91,8 +91,50 @@ def crearProducto():
 
     nombre_img = imagen.filename
     imagen.save('./static/img/' + nombre_img)
-    registroModels.crearProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/static/img/' + nombre_img)
+    registroModels.crearProducto(nombre=nombre, descripcion=descripcion, precio=precio, estado=estado, imagen='/static/img/' + nombre_img,usuario_id=session['id'])
     return redirect(url_for('bienvenido'))
+
+@app.get('/editarRegis')
+def editarRegis():
+    return render_template('actualizarRegistro.html')
+
+@app.route('/editarRegistro/<int:id>')
+def editarRegistro(id):
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE id = %s",(id,))
+    item = cursor.fetchall()
+    print(item)
+    cursor.close()
+    return render_template('actualizarRegistro.html', usuario=item[0])
+
+@app.route('/editarRegistro/<int:id>', methods=['POST'])
+def actualizarRegistro(id):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        celular = request.form['celular']
+        direccion = request.form['direccion']
+        correo = request.form['correo']
+        contraseña = request.form['contraseña']
+        imagen = request.files['imagen']
+
+        nombre_img = imagen.filename
+        imagen.save('./static/img/' + nombre_img)
+        registroModels.actualizarRegistro(nombre=nombre, descripcion=descripcion, celular=celular, direccion=direccion, correo=correo, contraseña=contraseña, imagen='/static/img/' + nombre_img, id=id)
+        return redirect(url_for('bienvenido'))
+
+'''
+@app.route('/actualizarRegistro', methods=['GET','POST'])
+def actualizarRegistro():
+    if request.method =='GET':
+        usuarios = registroModels.mostrarRegistro()
+        return render_template('actualizarRegistro.html', usuarios=usuarios)
+    else:
+        usuarios = registroModels.mostrarRegistro()
+        return render_template('actualizarRegistro.html', usuarios=usuarios)
+'''
+
+
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registrarse():
@@ -215,6 +257,7 @@ def iniciarLogin():
 
         if user:
             if contraseña == user["contraseña"]:
+                session['id'] = user['id']
                 session['correo'] = user['correo']
                 session['contraseña'] = user['contraseña']
                 return redirect(url_for('bienvenido'))
@@ -240,9 +283,9 @@ def iniciarLogin():
   
 @app.route('/login/bienvenido', methods=['GET','POST'])
 def bienvenido():
-
-        productos = registroModels.obtenerProductos()
-        return render_template('login_home.html', productos=productos)
+        print(session['id'])
+        productos = registroModels.obtenerProductos(session['id'])
+        return render_template('login_home.html',usuario_id=session['id'] ,productos=productos)
 
 
 @app.route('/login/recuperarPass/<token>')
