@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCTOS</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+    
+    <section class="our-publication pt-100 pb-70">
+        <div class="container">
+            <div class="section-header">
+                <i class="fa fa-book"></i>
+                <h2>Our Product</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod  labore et dolore magna aliqua.</p>
+            </div>
+            <div class="row">
+                {% for producto in productos %}
+                    <div class="col-sm-6 col-lg-3">
+                        <form action="" method="">
+                            <div class="card text-center bg-secondary bg-gradient" id="div_patito">
+                                <div class="card-header">VENTA</div>
+                                <img src="{{producto['imagen']}}">
+                                <div class="card-body">
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">: <span class="text-primary" ></span></li>
+                                            <li class="list-group-item">Nombre: <span class="text-primary">{{producto['nombre']}}</span></li>
+                                            <li class="list-group-item">Precio: $ <span class="text-primary">{{producto['precio']}}</span></li>
+                                </ul>
+                                <div class="card-footer text-right">
+                                    <button type="button" class="btn btn-warning">Comprar</button>
+                                </div>
+                            </div>
+                        </form>
+    
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <style>
+        .pt-100 {
+                        padding-top: 100px;
+                    }
+                    .pb-70 {
+                        padding-bottom: 70px;
+                    }
+                    .section-header {
+                        margin-bottom: 60px;
+                        text-align: center;
+                    }
+                    .section-header i {
+                        color: #ff007d;
+                        font-size: 50px;
+                        display: inline-block;
+                        margin-bottom: 10px;
+                    }
+                    .section-header h2 {
+                        font-weight: bold;
+                        font-size: 34px;
+                        margin: 0;
+                    }
+                    .section-header p {
+                        max-width: 500px;
+                        margin: 20px auto 0;
+                    }
+                    .single-publication {
+                        border: 1px solid #f2eee2;
+                        margin-bottom: 30px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .single-publication figure {
+                        position: relative;
+                        margin: 0;
+                        text-align: center;
+                    }
+                    .single-publication figure > a {
+                        background-color: #fafafa;
+                        display: block;
+                    }
+                    .single-publication figure ul {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0;
+                        position: absolute;
+                        right: -50px;
+                        top: 20px;
+                        transition: .6s;
+                        -webkit-transition: .6s;
+                    }
+                    .single-publication:hover figure ul {
+                        right: 15px;
+                    }
+                    .single-publication figure ul li a {
+                        display: inline-block;
+                        width: 35px;
+                        height: 35px;
+                        text-align: center;
+                        font-size: 15px;
+                        background: #ff007d;
+                        margin-bottom: 7px;
+                        border-radius: 50%;
+                        line-height: 35px;
+                        color: #fff;
+                    }
+                    .single-publication figure ul li a:hover {
+                        color: #fff;
+                        background: #e50663;
+                    }
+                </style>
+</body>
+</html>

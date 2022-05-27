@@ -16,6 +16,11 @@ s=URLSafeTimedSerializer('Thisisasecret')
 def home():
     return render_template('home.html')
 
+@app.route('/cerrarSesion')
+def cerrar():
+    session.clear()
+    return redirect(url_for('iniciarLogin'))
+
 @app.route("/eliminar/<int:id>")
 def eliminarProducto(id):
     cursor = db.cursor()
@@ -280,7 +285,12 @@ def iniciarLogin():
             flash("¡Nombre de usuario/contraseña incorrectos!")
             return render_template('login.html')
         '''
-  
+
+@app.route('/productos', methods=['GET','POST'])
+def productosM():
+    productos = registroModels.obtenerProductos(session['id'])
+    return render_template('productos.html', usuario_id=session['id'], productos=productos) 
+
 @app.route('/login/bienvenido', methods=['GET','POST'])
 def bienvenido():
         print(session['id'])
@@ -416,4 +426,4 @@ def PassNew(correo):
             return render_template('formularioRecu.html')
         
 
-app.run(debug=True)
+#app.run(debug=True)
