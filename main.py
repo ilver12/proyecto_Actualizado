@@ -286,10 +286,10 @@ def iniciarLogin():
             return render_template('login.html')
         '''
 
-@app.route('/productos', methods=['GET','POST'])
-def productosM():
-    productos = registroModels.obtenerProductos(session['id'])
-    return render_template('productos.html', usuario_id=session['id'], productos=productos) 
+@app.route('/productos/<int:id>', methods=['GET','POST'])
+def productosM(id):
+    productos = registroModels.obtenerProductos(id)
+    return render_template('productos.html', usuario_id=id, productos=productos) 
 
 @app.route('/login/bienvenido', methods=['GET','POST'])
 def bienvenido():
@@ -426,4 +426,4 @@ def PassNew(correo):
             return render_template('formularioRecu.html')
         
 
-#app.run(debug=True)
+app.run(debug=True)
