@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/img/css/estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+    <title>
+        {% block titulo %}
+        {% endblock %}
+    </title>
+    {% block css %}
+    {% endblock %}
+<body>
+    {% block body %}
+    {% endblock %}
+    <div class="to-do">
+        <div class="container1">   
+            <div class="side-nav">
+                <a href="#" class="logo">
+                    <img src="/static/img/lo.png" class="logo-img">
+                </a>
+                <ul class="nav-links ">
+                    <li><a href="#" class="activate"><ion-icon name="home-outline"></ion-icon><p>Inicio</p></a></li>
+                    <li><a href="#about"><ion-icon name="business-outline"></ion-icon><p>Acerca de Nosotros</p></a></li>
+                    <li><a href="#services"><ion-icon name="document-text-outline"></ion-icon><p>Nuestros Servicios</p></a></li>
+                    <li><a href="#menus"><ion-icon name="fast-food-outline"></ion-icon><p>Menús</p></a></li>
+                    <li><a href="#rateus"><ion-icon name="star-half-outline"></ion-icon><p>Califícanos</p></a></li>
+                    <div class="active"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="container2">
+            <div class="links">
+                <a href="/login" class="login">Iniciar Sesión</a>
+                <a href="/registro" class="register">Registrarse</a>
+            </div>
+            <div class="contenido content">
+                <video src="/static/img/FOOD Reel.mp4" autoplay muted loop></video>
+                <div class="overlay"></div>
+                <div class="header-content">
+                    <h1>FOOD <span class="span">Go</span><span class="dot">.</span></h1>
+                    <p class="text">Brindamos alojamiento a muchos restaurantes para que elijas el que más te guste, ¡Mira sus cartas!</p>
+                    <a href="#" class="btn">Ver meús</a>
+                </div>
+            </div>
+            <div id="about" class="about">
+                <h2>Acerca de Nosotros</h2>
+                <div class="colors">
+                    <div class="red"></div>
+                    <div class="green"></div>
+                    <div class="white"></div>
+                    <div class="red"></div>
+                    <div class="white"></div>
+                    <div class="green"></div>
+                </div>
+                <div class="secundary-about-container">
+                    <p class="text-about">"La mejor red social es una mesa rodeada de las personas que tú más quieres"</p>
+                    <img src="/static/img/lo.png" class="image-about">
+                </div>
+                <div class="social-links">
+                    <h3 class="social-media">Redes Sociales</h3>
+                    <a href="#" class="face"><ion-icon class="fac" name="logo-facebook"></ion-icon>Facebook</a>
+                    <a href="#" class="insta"><ion-icon class="inst" name="logo-instagram"></ion-icon>Instagram</a>
+                </div>
+            </div>
+
+            <div id="services" class="services">
+                <h2 class="services-tittle">Nuestros servicios</h2>
+                <div class="colors">
+                    <div class="red"></div>
+                    <div class="green"></div>
+                    <div class="white"></div>
+                    <div class="red"></div>
+                    <div class="white"></div>
+                    <div class="green"></div>
+                </div>
+                <div class="eh"></div>
+                <div class="services-content">
+                    <h4 class="list"><span class="numbers">1</span> Autoservicio</h4>
+                    <img class="img-svg" src="/static/img/delivery.svg">
+                    <p class="service-text">Este es el que más gusta tanto a clientes como a empleados, porque para los comensales es el más rápido y para los trabajadores el más económico.</p>
+                </div>
+                
+                <div class="services-content">
+                    <h4 class="list"><span class="numbers">2</span> Buffet Asistido</h4>
+                    <img class="img-svg" src="/static/img/services.svg">
+                    <p class="service-text">Al igual que el servicio en mesa, los clientes eligen lo que desean comer, con la diferencia de que al final el propio cliente es quien se lleva el plato a la mesa.</p>
+                </div>
+
+                <div class="services-content">
+                    <h4 class="list"><span class="numbers">3</span> Degustación</h4>
+                    <img class="img-svg" src="/static/img/taste.svg">
+                    <p class="service-text">Este es cuando se hace una exposición de cierta cantidad de productos para que los clientes puedan probarlos todos.</p>
+                </div>
+
+                <div class="services-content">
+                    <h4 class="list"><span class="numbers">4</span> Servicio en mesa</h4>
+                    <img class="img-svg" src="/static/img/france.svg">
+                    <p class="service-text">Es el servicio en que los clientes eligen lo que desean comer, de una mesa expositora, y un camarero se lo va sirviendo.</p>
+                </div>
+            </div>
+            
+            <div id="menus" class="menus">
+                <h2 class="services-tittle">Menús</h2>
+                <div class="colors">
+                    <div class="red"></div>
+                    <div class="green"></div>
+                    <div class="white"></div>
+                    <div class="red"></div>
+                    <div class="white"></div>
+                    <div class="green"></div>
+                </div>
+
+                <h1>Work in progress</h1>
+
+
+            </div>
+
+
+            
+            <div class="footer">
+                <div class="text-right">
+                    <p>Aviso Legal</p>
+                    <p>Políticas de Privacidad</p>
+                    <p>Política de Cookies</p>
+                    <p>Política de Calidad</p>
+                </div>
+
+                <div class="logo-content">
+                    <h1 class="food-logo">FOOD <span class="span2">Go</span><span class="dot2">.</span></h1>   
+                    <div class="colors2">
+                        <div class="red"></div>
+                        <div class="green"></div>
+                        <div class="white"></div>
+                        <div class="red"></div>
+                        <div class="white"></div>
+                        <div class="green"></div>
+                        <div class="red"></div>
+                        <div class="green"></div>
+                        <div class="white"></div>
+                        <div class="red"></div>
+                        <div class="white"></div>
+                        <div class="green"></div>
+                        <div class="red"></div>
+                        <div class="green"></div>
+                        <div class="white"></div>
+                        <div class="red"></div>
+
+                    </div>
+                    <div class="social-links2">
+                        <h3 class="social-media2">Redes Sociales</h3>
+                        <a href="#" class="face"><ion-icon class="fac" name="logo-facebook"></ion-icon>Facebook</a>
+                        <a href="#" class="insta"><ion-icon class="inst" name="logo-instagram"></ion-icon>Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="text-left">
+                    <p>Food Go</p>
+                    <p>Blog</p>
+                    <p>Contáctos</p>
+                    <p>FAQs</p>
+                </div>
+            </div>
+            <div>
+                <p class="rr" >© 2022 Food Go. Todos los derechos reservados. | Hecho con ❤  <span class="logofooter"></span><span class="pun">.</span></p>
+            </div>
+        </div>
+    </div>
+    
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
